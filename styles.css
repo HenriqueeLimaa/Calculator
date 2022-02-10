@@ -48,7 +48,9 @@ body{
     flex-wrap: wrap;
 }
 
-.operation-buttons{
+.operation-buttons,
+.number-buttons,
+.equal-button{
     width: 80px;
     height: 80px;
     border: 2px solid black;
