@@ -31,7 +31,7 @@ let clearButton = document.querySelector('.clear-button');
 let backspace = document.querySelector('.backspace');
 let equalButton = document.querySelector('.equal-button');
 
-let operation,num1,num2,eternal1;
+let operation,num1,eternal1;
 
 numberButtons.forEach(button => button.addEventListener("click", (event)=>{
     displayContent.textContent += event.target.textContent;
@@ -40,9 +40,9 @@ numberButtons.forEach(button => button.addEventListener("click", (event)=>{
 
 operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     num1 = displayContent.textContent;
-    const cu = num1;
+    const holdNum1 = num1;
     num1 = "";
-    parseInt(eternal1 = cu);
+    parseInt(eternal1 = holdNum1);
     displayContent.textContent += event.target.textContent;
     operation = `${event.target.textContent}`;
 } ))
@@ -51,7 +51,6 @@ clearButton.addEventListener('click', ()=>{
     displayContent.textContent = "";
     operation = "";
     num1 = "";
-    num2 = "";
 })
 
 equalButton.addEventListener('click', (event)=>{
