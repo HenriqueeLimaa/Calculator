@@ -45,19 +45,22 @@ operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     //If the user already chose an operation(eg 10 + 4)and clicks in an operation again, the display
     //will return the result of the last operation.
     if(operation){
-        operation = event.target.textContent;
-        displayContent.textContent += event.target.textContent;
+        // displayContent.textContent += event.target.textContent;
         displayContent.textContent = operate(operation, +eternal1, +num1);
+        eternal1 = displayContent.textContent;
+        operation = "";
+    }else{
+        num1 = displayContent.textContent;
+        const holdNum1 = num1;
+        num1 = "";
+        parseInt(eternal1 = holdNum1);
+        displayContent.textContent += event.target.textContent;
+        operation = event.target.textContent;
     }
     //If the user didnt chose an operation yet, saves the first number in the eternal1 variable, cleans
     //num1 variable so it can be used again as the second value in the operate function, and display the
     //numbers. 
-    num1 = displayContent.textContent;
-    const holdNum1 = num1;
-    num1 = "";
-    parseInt(eternal1 = holdNum1);
-    displayContent.textContent += event.target.textContent;
-    operation = event.target.textContent;
+   
 } ))
 
 clearButton.addEventListener('click', ()=>{
@@ -67,7 +70,7 @@ clearButton.addEventListener('click', ()=>{
 })
 
 backspace.addEventListener('click', ()=>{
-    displayContent.textContent.splice(-1,1);
+    
 })
 
 //Display results once the user click on the = button.
