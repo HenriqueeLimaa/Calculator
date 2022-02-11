@@ -39,12 +39,17 @@ numberButtons.forEach(button => button.addEventListener("click", (event)=>{
   }))
 
 operationButtons.forEach(button => button.addEventListener('click', (event)=>{
+    if(operation){
+        operation = event.target.textContent;
+        displayContent.textContent += event.target.textContent;
+        displayContent.textContent = operate(operation, +eternal1, +num1);
+    }
     num1 = displayContent.textContent;
     const holdNum1 = num1;
     num1 = "";
     parseInt(eternal1 = holdNum1);
     displayContent.textContent += event.target.textContent;
-    operation = `${event.target.textContent}`;
+    operation = event.target.textContent;
 } ))
 
 clearButton.addEventListener('click', ()=>{
@@ -57,3 +62,5 @@ equalButton.addEventListener('click', (event)=>{
     displayContent.textContent += event.target.textContent;
     displayContent.textContent = operate(operation, +eternal1, +num1);
 })
+
+// if i do 7x7 and click in the X button again and then change to - it shows a bug
