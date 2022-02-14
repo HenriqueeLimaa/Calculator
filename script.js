@@ -45,24 +45,20 @@ operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     //If the user already chose an operation(eg 10 + 4)and clicks in an operation again, the display
     //will return the result of the last operation.
     if(operation){
-        // operation = event.target.textContent;
-        displayContent.textContent = operate(operation, +eternal1, +num1);
-        eternal1 = displayContent.textContent;
-        console.log(eternal1);
+        eternal1 = operate(event.target.textContent, +eternal1, +num1);
         operation = "";
-        displayContent.textContent += operation;
-    }else{
+        displayContent.textContent = eternal1 + operation;
+    }//If the user didnt chose an operation yet, saves the first number in the eternal1 variable, cleans
+    //num1 variable so it can be used again as the second value in the operate function, and display the
+    //numbers. 
+    else{
         num1 = displayContent.textContent;
         const holdNum1 = num1;
         num1 = "";
         parseInt(eternal1 = holdNum1);
         operation = event.target.textContent;
-        displayContent.textContent += event.target.textContent;
+        displayContent.textContent += operation;
     }
-    //If the user didnt chose an operation yet, saves the first number in the eternal1 variable, cleans
-    //num1 variable so it can be used again as the second value in the operate function, and display the
-    //numbers. 
-   
 } ))
 
 clearButton.addEventListener('click', ()=>{
@@ -76,14 +72,12 @@ backspace.addEventListener('click', ()=>{
 })
 
 //Display results once the user click on the = button.
-equalButton.addEventListener('click', (event)=>{
-    displayContent.textContent += event.target.textContent;
-    displayContent.textContent = operate(operation, +eternal1, +num1);
+equalButton.addEventListener('click', ()=>{
+    showResult();
 })
 
 // if i do 7x7 and click in the X button again and then change to - it shows a bug
 
-function showResult(event){
-    displayContent.textContent += event.target.textContent;
+function showResult(){
     displayContent.textContent = operate(operation, +eternal1, +num1);
 }
