@@ -102,7 +102,7 @@ equalButton.addEventListener('click', ()=>{
 decimalButton.addEventListener('click', (event)=>{
     if(!lockDecimal){
         displayContent.textContent += event.target.textContent;
-        num1 = event.target.textContent;
+        num1 += event.target.textContent;
         lockDecimal = true;
     }
 })
