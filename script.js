@@ -45,7 +45,7 @@ operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     //If the user already chose an operation(eg 10 + 4)and clicks in an operation again, the display
     //will return the result of the last operation.
     if(operation){
-        eternal1 = operate(event.target.textContent, +eternal1, +num1);
+        eternal1 = operate(operation, +eternal1, +num1);
         operation = "";
         displayContent.textContent = eternal1 + operation;
     }//If the user didnt chose an operation yet, saves the first number in the eternal1 variable, cleans
