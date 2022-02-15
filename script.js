@@ -43,10 +43,20 @@ let decimalButton = document.querySelector('.decimal-button');
 let operation,num1,eternal1,saveMe,lockDecimal;
 
 //Detect when the user click on a number button, makes it appear on the display and stores it on num1
-numberButtons.forEach(button => button.addEventListener("click", (event)=>{
+function numberButtonsFunc(event){
     displayContent.textContent += event.target.textContent;
     num1 += event.target.textContent;
-  }))
+}
+numberButtons.forEach(button => button.addEventListener("click", (event)=>{
+    numberButtonsFunc(event);
+}));
+window.addEventListener('keypress', (event)=>{
+    for(let button of numberButtons){
+        if(event.key === button.textContent){
+            Number(num1 += button.textContent)
+        }
+    }
+})
 
 //Detect when the user click on an operation button.
 operationButtons.forEach(button => button.addEventListener('click', (event)=>{
@@ -74,44 +84,58 @@ operationButtons.forEach(button => button.addEventListener('click', (event)=>{
         lockDecimal = false;
     }
 } ))
-
-clearButton.addEventListener('click', ()=>{
+//ClearButton function and listeners
+function clearButtonFunc(){
     displayContent.textContent = "";
     operation = "";
     num1 = "";
     eternal1 = "";
     saveMe = false;
     lockDecimal = false;
+}
+clearButton.addEventListener('click', ()=>{
+    clearButtonFunc();
 })
-
-backspace.addEventListener('click', ()=>{
+window.addEventListener('keypress', (event)=>{
+    if(event.key === "c" || "C") clearButtonFunc();
+})
+//Backspace function and listeners
+function backspaceFunc(){
     if(num1.charAt(num1.length -1) === ".") lockDecimal = false;
     displayContent.textContent = displayContent.textContent.slice(0,-1);
     num1 = num1.slice(0,-1);
+}
+backspace.addEventListener('click', ()=>{
+    backspaceFunc();
 })
-
+window.addEventListener('keydown', (event)=>{
+    if (event.code === "Backspace") backspaceFunc();
+})
 //Display results once the user click on the = button.
-equalButton.addEventListener('click', ()=>{
+function equalButtonFunc(){
     displayContent.textContent = operate(operation, +eternal1, +num1);
     operation = "";
     eternal1 = "";
     num1 = "";
     lockDecimal = false;
+}
+equalButton.addEventListener('click', ()=>{
+    equalButtonFunc();
 })
-
-decimalButton.addEventListener('click', (event)=>{
-    decimalButtonFunc(event);
+window.addEventListener('keypress', (event)=>{
+    if(event.key === "=") equalButtonFunc();
 })
-
-//need to fix this
-decimalButton.addEventListener('keydown', (event)=>{
-        decimalButtonFunc(event);
-})
-
-function decimalButtonFunc(event){
+//DecimalButton function and listeners
+function decimalButtonFunc(){
     if(!lockDecimal){
-        displayContent.textContent += event.target.textContent;
-        num1 += event.target.textContent;
+        displayContent.textContent += ".";
+        num1 += ".";
         lockDecimal = true;
     }
 }
+decimalButton.addEventListener('click', ()=>{
+    decimalButtonFunc();
+})
+window.addEventListener('keypress', (event)=>{
+    if(event.key === ".") decimalButtonFunc();  
+})
