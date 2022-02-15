@@ -98,11 +98,19 @@ equalButton.addEventListener('click', ()=>{
     lockDecimal = false;
 })
 
-// if i do 7x7 and click in the X button again and then change to - it shows a bug
 decimalButton.addEventListener('click', (event)=>{
+    decimalButtonFunc(event);
+})
+
+//need to fix this
+decimalButton.addEventListener('keydown', (event)=>{
+        decimalButtonFunc(event);
+})
+
+function decimalButtonFunc(event){
     if(!lockDecimal){
         displayContent.textContent += event.target.textContent;
         num1 += event.target.textContent;
         lockDecimal = true;
     }
-})
+}
