@@ -85,6 +85,7 @@ clearButton.addEventListener('click', ()=>{
 })
 
 backspace.addEventListener('click', ()=>{
+    if(num1.charAt(num1.length -1) === ".") lockDecimal = false;
     displayContent.textContent = displayContent.textContent.slice(0,-1);
     num1 = num1.slice(0,-1);
 })
