@@ -17,16 +17,17 @@ function divide(num1, num2){
 
 function operate(operator, num1, num2){
     let alright;
-    switch (operator) {
+    switch (operator.toLowerCase()) {
         case '+':
             if(num2 === 1 && alright) {num2-=1, alright = true}
             return add(num1, num2);
         case '-':
             if(num2 === 1 && alright) {num2-=1, alright = true}
             return subtract(num1, num2);
-        case 'X':
+        case 'x':
             return multiply(num1, num2);
         case '/':
+            if(num2 === 0) return displayContent.textContent = "Error!";
             return divide(num1, num2);
     }
 }
@@ -51,6 +52,27 @@ numberButtons.forEach(button => button.addEventListener("click", (event)=>{
     numberButtonsFunc(event);
 }));
 //Detect when the user click on an operation button.
+
+function operationButtonsFunc(event){
+    if(operation){
+        eternal1 = operate(operation, +eternal1, +num1);
+        operation = "";
+        num1 = 1;
+        saveMe = false;
+        console.log(num1);
+        displayContent.textContent = eternal1 + operation;
+    }else{
+        if(!saveMe){
+            num1 = displayContent.textContent;
+            parseInt(eternal1 = num1);
+            num1 = "";
+        }
+        operation = event.key;
+        displayContent.textContent += operation;
+        saveMe = true;
+        lockDecimal = false;
+    }
+}
 operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     //If the user already chose an operation(eg 10 + 4)and clicks in an operation again, the display
     //will return the result of the last operation.
@@ -100,8 +122,8 @@ backspace.addEventListener('click', ()=>{
 //Display results once the user click on the = button.
 function equalButtonFunc(){
     displayContent.textContent = operate(operation, +eternal1, +num1);
-    operation = "";
-    eternal1 = "";
+    eternal1 = operate(operation, +eternal1, +num1);
+    operation = ""; 
     num1 = "";
     lockDecimal = false;
 }
@@ -121,12 +143,32 @@ decimalButton.addEventListener('click', ()=>{
 })
 
 //KEYBOARD SUPPORT
-window.addEventListener('keypress', (event)=>{
-    if(event.key === ".") decimalButtonFunc(event);  
-    if(event.key === "=") equalButtonFunc();
-    if(event.code === "Backspace") backspaceFunc();
-    if(event.key === "c" || "C") clearButtonFunc();
-    for(let button of numberButtons){
-        if(event.key === button.textContent) numberButtonsFunc();
+window.addEventListener('keydown', (event)=>{
+    switch(event.key.toLowerCase()){
+        case ".":
+            return decimalButtonFunc(); 
+        case "=":
+            return equalButtonFunc();
+        case "backspace":
+            return backspaceFunc();
+        case "c":
+            return clearButtonFunc();
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+            return displayContent.textContent += event.key,
+            num1 += event.key;
+        case "+":
+        case "-":
+        case "x":
+        case "/":
+            return operationButtonsFunc(event);
     }
 })
