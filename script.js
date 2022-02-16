@@ -40,7 +40,7 @@ let equalButton = document.querySelector('.equal-button');
 let decimalButton = document.querySelector('.decimal-button');
 
 //Store the numbers used as arguments in the operate function
-let operation,num1,eternal1,saveMe,lockDecimal;
+let operation="",num1="",eternal1="",saveMe,lockDecimal;
 
 //Detect when the user click on a number button, makes it appear on the display and stores it on num1
 function numberButtonsFunc(event){
@@ -50,14 +50,6 @@ function numberButtonsFunc(event){
 numberButtons.forEach(button => button.addEventListener("click", (event)=>{
     numberButtonsFunc(event);
 }));
-window.addEventListener('keypress', (event)=>{
-    for(let button of numberButtons){
-        if(event.key === button.textContent){
-            Number(num1 += button.textContent)
-        }
-    }
-})
-
 //Detect when the user click on an operation button.
 operationButtons.forEach(button => button.addEventListener('click', (event)=>{
     //If the user already chose an operation(eg 10 + 4)and clicks in an operation again, the display
@@ -96,9 +88,6 @@ function clearButtonFunc(){
 clearButton.addEventListener('click', ()=>{
     clearButtonFunc();
 })
-window.addEventListener('keypress', (event)=>{
-    if(event.key === "c" || "C") clearButtonFunc();
-})
 //Backspace function and listeners
 function backspaceFunc(){
     if(num1.charAt(num1.length -1) === ".") lockDecimal = false;
@@ -107,9 +96,6 @@ function backspaceFunc(){
 }
 backspace.addEventListener('click', ()=>{
     backspaceFunc();
-})
-window.addEventListener('keydown', (event)=>{
-    if (event.code === "Backspace") backspaceFunc();
 })
 //Display results once the user click on the = button.
 function equalButtonFunc(){
@@ -122,9 +108,6 @@ function equalButtonFunc(){
 equalButton.addEventListener('click', ()=>{
     equalButtonFunc();
 })
-window.addEventListener('keypress', (event)=>{
-    if(event.key === "=") equalButtonFunc();
-})
 //DecimalButton function and listeners
 function decimalButtonFunc(){
     if(!lockDecimal){
@@ -136,6 +119,14 @@ function decimalButtonFunc(){
 decimalButton.addEventListener('click', ()=>{
     decimalButtonFunc();
 })
+
+//KEYBOARD SUPPORT
 window.addEventListener('keypress', (event)=>{
-    if(event.key === ".") decimalButtonFunc();  
+    if(event.key === ".") decimalButtonFunc(event);  
+    if(event.key === "=") equalButtonFunc();
+    if(event.code === "Backspace") backspaceFunc();
+    if(event.key === "c" || "C") clearButtonFunc();
+    for(let button of numberButtons){
+        if(event.key === button.textContent) numberButtonsFunc();
+    }
 })
